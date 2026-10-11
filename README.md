@@ -1,6 +1,6 @@
 # reMarkable Calculator
 
-A standalone calculator app for the **reMarkable Paper Pure**, built as an [AppLoad](https://github.com/asivery/rm-appload) (xovi) QML app. High-contrast, animation-free UI designed for e-ink. This should work on other reMarkable tablets, but has not been tested.
+A standalone calculator app for the **reMarkable Paper Pure**, built as an [AppLoad](https://github.com/asivery/rm-appload) (xovi) QML app. High-contrast, animation-free UI designed for e-ink. This should work on other reMarkable tablets, but has not been tested on all models.
 
 **[Live web demo](https://GlitchToGlory.github.io/remarkable-calculator/)** (same calculation logic as the tablet app)
 
