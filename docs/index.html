@@ -1,26 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2775.1">
-  <style type="text/css">
-    body {background-color: #0e0e0e}
-    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 10.2px 'Helvetica Neue'; color: #adadad; -webkit-text-stroke: #adadad}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: right; font: 12.0px 'Helvetica Neue'; color: #adadad; -webkit-text-stroke: #adadad; min-height: 15.0px}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: right; font: 28.8px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
-    span.s1 {font-kerning: none; background-color: #0e0e0e}
-    span.s2 {font: 10.2px Menlo; font-kerning: none; background-color: #0e0e0e}
-    span.s3 {font: 10.2px 'Helvetica Neue'; text-decoration: underline ; font-kerning: none; color: #adadad; -webkit-text-stroke: 0px #adadad}
-    span.s4 {font-kerning: none}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reMarkable Calculator – web demo</title>
+<style>
+  :root { --bg:#fff; --fg:#000; --mut:#444; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111; --fg:#fff; --mut:#bbb; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; display:flex; justify-content:center; }
+  main { width:min(100%,420px); padding:16px; box-sizing:border-box; }
+  h1 { font-size:1.1rem; margin:0 0 4px; }
+  p { color:var(--mut); font-size:.85rem; margin:0 0 12px; }
+  #disp { border-bottom:3px solid var(--fg); padding:8px 4px; text-align:right; min-height:84px; }
+  #top { color:var(--mut); font-size:1rem; min-height:1.4em; overflow:hidden; }
+  #main { font-size:2.4rem; overflow:hidden; white-space:nowrap; }
+  #pad { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px; }
+  button { font-size:1.5rem; padding:16px 0; border:3px solid var(--fg); border-radius:12px; background:var(--bg); color:var(--fg); cursor:pointer; }
+  button.acc { background:var(--fg); color:var(--bg); }
+  button:active { filter:invert(1); }
+  a { color:inherit; }
+</style>
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 4.0px 0.0px; font: 13.2px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s1"><b>reMarkable Calculator</b><b></b></span></h1>
-<p class="p2"><span class="s1">Web demo of the same logic (</span><span class="s2">calc.js</span><span class="s1">) that runs on the tablet. <a href="https://github.com/GlitchToGlory/remarkable-calculator"><span class="s3">Source on GitHub</span></a></span></p>
-<p class="p3"><span class="s4"></span><br></p>
-<p class="p4"><span class="s1">0</span></p>
+<main>
+  <h1>reMarkable Calculator</h1>
+  <p>Web demo of the same logic (<code>calc.js</code>) that runs on the tablet. <a href="https://github.com/GlitchToGlory/remarkable-calculator">Source on GitHub</a></p>
+  <div id="disp"><div id="top"></div><div id="main">0</div></div>
+  <div id="pad"></div>
+</main>
+<script>
+fetch("calc.js").then(r => r.text()).then(src => {
+  const C = new Function(src.replace(/^\.pragma library.*$/m, "") +
+    "; return { LAYOUT, isAccent, press, initialState, view };")();
+  let st = C.initialState();
+  const top = document.getElementById("top"), main = document.getElementById("main"), pad = document.getElementById("pad");
+  function render() { const v = C.view(st); top.textContent = v.top; main.textContent = v.main; }
+  C.LAYOUT.forEach(row => row.forEach(({k, s}) => {
+    const b = document.createElement("button");
+    b.textContent = k;
+    if (C.isAccent(k)) b.className = "acc";
+    if (s > 1) b.style.gridColumn = "span " + s;
+    b.onclick = () => { st = C.press(st, k); render(); };
+    pad.appendChild(b);
+  }));
+  render();
+}).catch(() => { document.getElementById("main").textContent = "Could not load calc.js"; });
+</script>
 </body>
 </html>
