@@ -1,0 +1,9 @@
+{
+    "id": "remarkable-calculator",
+    "name": "Calculator",
+    "loadsBackend": false,
+    "entry": "/qml/main.qml",
+    "canHaveMultipleFrontends": false,
+    "supportsScaling": true,
+    "aspectRatio": "original"
+}
