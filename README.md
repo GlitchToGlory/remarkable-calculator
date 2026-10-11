@@ -4,7 +4,7 @@ A standalone calculator app for the **reMarkable Paper Pure**, built as an [AppL
 
 **[Live web demo](https://GlitchToGlory.github.io/remarkable-calculator/)** (same calculation logic as the tablet app)
 
-![Calculator running on a reMarkable Paper Pure](docs/photo.jpg)
+**[Calculator running on a reMarkable Paper Pure](docs/photo.jpg)**
 
 ## Features
 - `+ − × ÷ ^`, parentheses, percent, decimals, unary minus
