@@ -16,7 +16,7 @@ A standalone calculator app for the **reMarkable Paper Pure**, built as an [AppL
 Requires developer mode with xovi + AppLoad already installed.
 
 1. Download `calculator.zip` from the Releases page and unzip it (or build it, see below).
-2. With the tablet connected by USB (password: Settings → Help → About):
+2. With the tablet connected by USB (password: Settings → Help → About → Copyrights and licences):
    ```sh
    scp -O -r calculator root@10.11.99.1:/home/root/xovi/exthome/appload/
    ```
